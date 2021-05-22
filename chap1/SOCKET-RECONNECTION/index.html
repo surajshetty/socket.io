@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io("http://localhost:5000",{
+        "reconnection":true,    // reconnection is enabled
+        "reconnectionDelay":5000, // reconnect after 5 sec
+        "reconnectionAttempts":5  // max attemp to reconnect is 5
+    });
+    // socket io events https://socket.io/docs/v3/client-socket-instance/
+    
+    socket.on('connect',(number)=>{
+       console.log("connection made");
+    })
+    socket.on('connect_error',(number)=>{
+       console.log("connection error");
+    })
+    socket.on('disconnect',(number)=>{
+       console.log("connection error");
+    })
+
+    socket.on('greeting-from-server',(message)=>{
+        document.body.appendChild(
+            document.createTextNode(message.greeting)
+        );
+
+        socket.emit("greeting-from-client",{
+            greeting:'Hello Server'
+        });
+    })
+  
+</script>
+</body>
+</html>
