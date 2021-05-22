@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var socket = io("http://localhost:5000");
+ socket.on('connect',()=>{
+       document.getElementById("my-form")
+       .addEventListener('submit',(e)=>{
+           e.preventDefault();
+           debugger;
+           socket.send(document.getElementById("message").value);
+       });
+       socket.on("message",(message)=>{
+           debugger;
+           console.log("message reciveed");
+           var messageNode = document.createTextNode(message),
+               messageElement = document.createElement("p");
+               messageElement.appendChild(messageNode);
+            var container =  document.getElementById("message_div");
+            container.appendChild(messageElement);
+       });
+ })
+  
+</script>
+<form id="my-form">
+    message:<input type="text" id="message"/>
+    <input type="submit" value="Submit">
+
+</form>
+<div id="message_div">
+
+</div>
+</body>
+
+</html>
